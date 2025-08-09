@@ -2,6 +2,7 @@ package play;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxColor;
+import haxe.exceptions.ArgumentException;
 
 class PlayState extends FlxState
 {
@@ -70,14 +71,26 @@ class PlayState extends FlxState
 		addObject(ui_box);
 		addObject(ui_box_contents);
 
-		load_ui_option('main');
+		load_ui_menu('main');
 
 		super.create();
 	}
 
-	function load_ui_option(s:String)
+	function load_ui_menu(ui_menu:String)
 	{
-		trace(new haxe.exceptions.NotImplementedException());
+		for (item in ui_box_contents)
+		{
+			item.destroy();
+			ui_box_contents.remove(item);
+		}
+
+		if (!ui_options.exists(ui_menu))
+		{
+			trace(new ArgumentException(ui_menu));
+			return;
+		}
+
+		for (item in ui_options.get(ui_menu)) {}
 	}
 
 	override public function update(elapsed:Float)
