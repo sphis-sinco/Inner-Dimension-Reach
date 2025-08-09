@@ -45,11 +45,13 @@ class PlayState extends FlxState
 		'attacks' => [
 			{
 				name: 'Gay beam',
-				script_event: {name: 'playerAttack_gayBeam'}
+				script_event: {name: 'playerAttack_gayBeam'},
+				ui_menu: 'main'
 			},
 			{
 				name: 'Makankosappo',
-				script_event: {name: 'playerAttack_makankosappo'}
+				script_event: {name: 'playerAttack_makankosappo'},
+				ui_menu: 'main'
 			},
 		]
 	];
@@ -64,6 +66,8 @@ class PlayState extends FlxState
 	public var player:FlxSprite;
 
 	public var controls:Controls;
+
+	public var player_turn:Bool = false;
 
 	public var addObject = function(object:FlxBasic) {};
 
@@ -146,8 +150,11 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
-		ui_box_text_contents_update();
-		ui_controls_check();
+		if (!player_turn)
+		{
+			ui_box_text_contents_update();
+			ui_controls_check();
+		}
 	}
 
 	public function ui_controls_check():Void
@@ -162,13 +169,20 @@ class PlayState extends FlxState
 		}
 		else if (controls.justReleased.ACCEPT)
 		{
-			final ui_opt = ui_options.get(ui_option_menu)[ui_option_selection];
+			final ui_menu = ui_options.get(ui_option_menu);
+			final ui_opt = ui_menu[ui_option_selection];
 			final script_event = ui_opt.script_event;
 
 			if (ui_opt.ui_menu != null)
 				load_ui_menu(ui_opt.ui_menu);
 			if (script_event != null)
 				ScriptsManager.callScript(script_event.name ?? '', script_event.args ?? []);
+
+			if (ui_option_menu == 'attacks')
+			{
+				player_turn = false;
+				op_turn();
+			}
 		}
 		else if (controls.justReleased.BACK)
 		{
@@ -193,4 +207,6 @@ class PlayState extends FlxState
 			}
 		}
 	}
+
+	public function op_turn() {}
 }
