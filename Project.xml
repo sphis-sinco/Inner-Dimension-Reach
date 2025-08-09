@@ -39,6 +39,7 @@
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
+	<haxelib name="flixel-controls" />
 
 	<haxelib name="flixel-modding" />
 	<define name="flixelModding" if="flixel-modding"/>

@@ -4,12 +4,14 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import haxe.exceptions.ArgumentException;
+import play.controls.Controls;
 
 typedef UI_Option =
 {
 	var name:String;
 	var ?script_event:ScriptEvent;
 	var ?ui_menu:String;
+	var ?original_ui_menu:String;
 	var ?disabled:Bool;
 }
 
@@ -44,12 +46,13 @@ class PlayState extends FlxState
 				script_event: {name: 'playerAttack_gayBeam'}
 			},
 			{
-				name: 'Makankōsappō',
+				name: 'Makankosappo',
 				script_event: {name: 'playerAttack_makankosappo'}
 			},
 		]
 	];
 
+	public var ui_option_menu:String = '';
 	public var ui_option_selection:Int = 0;
 
 	public var ui_box:FlxSprite;
@@ -57,6 +60,8 @@ class PlayState extends FlxState
 
 	public var opponent:FlxSprite;
 	public var player:FlxSprite;
+
+	public var controls:Controls;
 
 	public var addObject = function(object:FlxBasic) {};
 
@@ -94,11 +99,16 @@ class PlayState extends FlxState
 
 		load_ui_menu('main');
 
+		controls = new Controls('main');
+		FlxG.inputs.addInput(controls);
+
 		super.create();
 	}
 
 	public function load_ui_menu(ui_menu:String)
 	{
+		ui_option_menu = ui_menu;
+
 		for (item in ui_box_text_contents)
 		{
 			item.destroy();
@@ -121,6 +131,9 @@ class PlayState extends FlxState
 
 			ui_box_text_contents.add(text);
 		}
+
+		ui_option_selection = 0;
+		ui_box_text_contents_update();
 	}
 
 	override public function update(elapsed:Float)
@@ -128,15 +141,46 @@ class PlayState extends FlxState
 		super.update(elapsed);
 
 		ui_box_text_contents_update();
+		ui_controls_check();
+	}
+
+	public function ui_controls_check():Void
+	{
+		if (controls.justReleased.DOWN)
+		{
+			ui_option_selection++;
+		}
+		else if (controls.justReleased.UP)
+		{
+			ui_option_selection--;
+		}
+		else if (controls.justReleased.ACCEPT)
+		{
+			load_ui_menu(ui_options.get(ui_option_menu)[ui_option_selection].ui_menu ?? ui_option_menu);
+			ScriptsManager.callScript(ui_options.get(ui_option_menu)[ui_option_selection].script_event.name ?? '',
+				ui_options.get(ui_option_menu)[ui_option_selection].script_event.args ?? []);
+		}
+		else if (controls.justReleased.BACK)
+		{
+			load_ui_menu(ui_options.get(ui_option_menu)[ui_option_selection].original_ui_menu ?? 'main');
+		}
+
+		if (ui_option_selection < 0)
+			ui_option_selection = 0;
+		if (ui_option_selection >= ui_box_text_contents.members.length)
+			ui_option_selection = ui_box_text_contents.members.length - 1;
 	}
 
 	public function ui_box_text_contents_update()
 	{
 		for (item in ui_box_text_contents.members)
 		{
-			final selected = item.ID == ui_option_selection;
+			if (item != null)
+			{
+				final selected = item.ID == ui_option_selection;
 
-			item.color = (selected) ? FlxColor.YELLOW : FlxColor.WHITE;
+				item.color = (selected) ? FlxColor.YELLOW : FlxColor.BLACK;
+			}
 		}
 	}
 }
