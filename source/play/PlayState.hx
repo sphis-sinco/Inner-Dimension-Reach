@@ -5,6 +5,31 @@ import flixel.util.FlxColor;
 
 class PlayState extends FlxState
 {
+	public var ui_options:Map<String, Array<Dynamic>> = [
+		'main' => [
+			{
+				name: 'Attacks',
+				ui_menu: 'attacks'
+			},
+			{
+				name: 'Skills',
+				ui_menu: 'skills'
+			},
+			{
+				name: 'Stats',
+				ui_menu: 'stats'
+			},
+			{
+				name: 'Items',
+				ui_menu: 'items'
+			},
+			{
+				name: 'Run',
+				disabled: true
+			}
+		]
+	];
+
 	public var ui_box:FlxSprite;
 	public var ui_box_contents:FlxTypedGroup<FlxBasic>;
 
@@ -45,7 +70,14 @@ class PlayState extends FlxState
 		addObject(ui_box);
 		addObject(ui_box_contents);
 
+		load_ui_option('main');
+
 		super.create();
+	}
+
+	function load_ui_option(s:String)
+	{
+		throw new haxe.exceptions.NotImplementedException();
 	}
 
 	override public function update(elapsed:Float)
