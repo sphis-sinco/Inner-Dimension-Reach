@@ -1,8 +1,12 @@
 function playerAttack_gayBeam()
 {
         trace('THE OPPONENT IS NOW G A E');
+	FlxFlicker.stopFlickering(PlayState.instance.opponent);
+	FlxFlicker.flicker(PlayState.instance.opponent);
 }
 function playerAttack_makankosappo()
 {
         trace('GOKU IS D E A D');
+	FlxFlicker.stopFlickering(PlayState.instance.opponent);
+	FlxFlicker.flicker(PlayState.instance.opponent);
 }

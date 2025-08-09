@@ -17,6 +17,8 @@ typedef UI_Option =
 
 class PlayState extends FlxState
 {
+	public static var instance:PlayState;
+
 	public var ui_options:Map<String, Array<UI_Option>> = [
 		'main' => [
 			{
@@ -77,6 +79,10 @@ class PlayState extends FlxState
 
 			add(object);
 		}
+
+		if (instance != null)
+			instance = null;
+		instance = this;
 
 		opponent = new FlxSprite().makeGraphic(256, 512, FlxColor.GRAY);
 		player = new FlxSprite().makeGraphic(256, 256, FlxColor.PURPLE);
