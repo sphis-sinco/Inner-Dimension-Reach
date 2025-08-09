@@ -39,7 +39,7 @@ class PlayState extends FlxState
 		addObject(opponent);
 		addObject(player);
 
-		ui_box = new FlxSprite().makeGraphic(480, FlxG.height);
+		ui_box = new FlxSprite().makeGraphic(320, FlxG.height);
 		ui_box_contents = new FlxTypedGroup<FlxBasic>();
 
 		addObject(ui_box);
