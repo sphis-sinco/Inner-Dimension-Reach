@@ -1,12 +1,20 @@
 package play;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import haxe.exceptions.ArgumentException;
 
+typedef UI_Option =
+{
+	var name:String;
+	var ?ui_menu:String;
+	var ?disabled:Bool;
+}
+
 class PlayState extends FlxState
 {
-	public var ui_options:Map<String, Array<Dynamic>> = [
+	public var ui_options:Map<String, Array<UI_Option>> = [
 		'main' => [
 			{
 				name: 'Attacks',
@@ -71,7 +79,7 @@ class PlayState extends FlxState
 		addObject(ui_box);
 		addObject(ui_box_contents);
 
-		load_ui_menu('puzy');
+		load_ui_menu('main');
 
 		super.create();
 	}
@@ -90,7 +98,15 @@ class PlayState extends FlxState
 			return;
 		}
 
-		for (item in ui_options.get(ui_menu)) {}
+		for (i in 0...ui_options.get(ui_menu).length)
+		{
+			var item = ui_options.get(ui_menu)[i];
+			var text = new FlxText(0, 64 + ((128 * (ui_options.get(ui_menu).length / 5)) * i), ui_box.width, item.name, 16);
+			text.color = FlxColor.BLACK;
+			text.alignment = 'center';
+
+			ui_box_contents.add(text);
+		}
 	}
 
 	override public function update(elapsed:Float)
