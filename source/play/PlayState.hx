@@ -9,7 +9,7 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		ui_box = new FlxSprite().makeGraphic(480, FlxG.height, 0xFFFFFF);
+		ui_box = new FlxSprite().makeGraphic(480, FlxG.height);
 		ui_box_contents = new FlxTypedGroup<FlxBasic>();
 
 		add(ui_box);
