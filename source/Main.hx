@@ -4,6 +4,8 @@ import openfl.display.Sprite;
 
 class Main extends Sprite
 {
+	public static var RELEASE_NUMBER:Int = 0;
+
 	public function new()
 	{
 		super();
