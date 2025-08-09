@@ -107,18 +107,18 @@ class PlayState extends FlxState
 
 	public function load_ui_menu(ui_menu:String)
 	{
+		if (!ui_options.exists(ui_menu))
+		{
+			trace(new ArgumentException('', 'Non-existing ui_menu "$ui_menu"'));
+			return;
+		}
+
 		ui_option_menu = ui_menu;
 
 		for (item in ui_box_text_contents)
 		{
 			item.destroy();
 			ui_box_text_contents.remove(item);
-		}
-
-		if (!ui_options.exists(ui_menu))
-		{
-			trace(new ArgumentException('', 'Non-existing ui_menu "$ui_menu"'));
-			return;
 		}
 
 		for (i in 0...ui_options.get(ui_menu).length)
@@ -156,9 +156,13 @@ class PlayState extends FlxState
 		}
 		else if (controls.justReleased.ACCEPT)
 		{
-			load_ui_menu(ui_options.get(ui_option_menu)[ui_option_selection].ui_menu ?? ui_option_menu);
-			ScriptsManager.callScript(ui_options.get(ui_option_menu)[ui_option_selection].script_event.name ?? '',
-				ui_options.get(ui_option_menu)[ui_option_selection].script_event.args ?? []);
+			final ui_opt = ui_options.get(ui_option_menu)[ui_option_selection];
+			final script_event = ui_opt.script_event;
+
+			if (ui_opt.ui_menu != null)
+				load_ui_menu(ui_opt.ui_menu);
+			if (script_event != null)
+				ScriptsManager.callScript(script_event.name ?? '', script_event.args ?? []);
 		}
 		else if (controls.justReleased.BACK)
 		{
