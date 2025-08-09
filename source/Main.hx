@@ -8,6 +8,12 @@ class Main extends Sprite
 	{
 		super();
 
+		FlxModding.init();
+
+		@:privateAccess {
+			ScriptsManager.loadScripts();
+		}
+
 		addChild(new FlxGame(0, 0, PlayState));
 	}
 }

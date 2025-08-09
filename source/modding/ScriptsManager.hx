@@ -15,10 +15,6 @@ import flixel.util.*;
 import flixel.util.typeLimit.NextState;
 import haxe.PosInfos;
 import play.*;
-import play.dialogue.*;
-import play.modules.*;
-import play.modules.init.*;
-import play.scripts.*;
 #if hscript
 import hscript.*;
 #end
@@ -80,11 +76,7 @@ class ScriptsManager
 		setScript('File', File);
 		#end
 
-		setScript('AdjustColorShader', AdjustColorShader);
 		setScript('PlayState', PlayState);
-		setScript('DialogueTextInitalizer', DialogueTextInitalizer);
-		setScript('BlankState', BlankState);
-		setScript('ModMenu', ModMenu);
 
 		setScript('Assets', Assets);
 		setScript('ScriptsManager', ScriptsManager);
@@ -122,7 +114,6 @@ class ScriptsManager
 		// Input
 		setScript("FlxMouse", FlxMouse);
 		setScript("FlxKeyboard", FlxKeyboard);
-		setScript("FlxScriptKey", FlxScriptKey);
 		setScript("FlxGamepad", FlxGamepad);
 
 		// Utilities
