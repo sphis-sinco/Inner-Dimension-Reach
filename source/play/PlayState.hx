@@ -64,10 +64,9 @@ class PlayState extends FlxState
 
 	public var opponent:FlxSprite;
 	public var player:FlxSprite;
+	public var player_turn:Bool = true;
 
 	public var controls:Controls;
-
-	public var player_turn:Bool = false;
 
 	public var addObject = function(object:FlxBasic) {};
 
@@ -150,7 +149,7 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
-		if (!player_turn)
+		if (player_turn)
 		{
 			ui_box_text_contents_update();
 			ui_controls_check();
@@ -181,6 +180,7 @@ class PlayState extends FlxState
 			if (ui_option_menu == 'attacks')
 			{
 				player_turn = false;
+				switch_turn();
 				op_turn();
 			}
 		}
@@ -193,6 +193,11 @@ class PlayState extends FlxState
 			ui_option_selection = 0;
 		if (ui_option_selection >= ui_box_text_contents.members.length)
 			ui_option_selection = ui_box_text_contents.members.length - 1;
+	}
+
+	function switch_turn()
+	{
+		trace(new haxe.exceptions.NotImplementedException());
 	}
 
 	public function ui_box_text_contents_update()
