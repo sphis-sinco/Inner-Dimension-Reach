@@ -34,6 +34,7 @@
 
 	<source path="source" />
 	<assets path="assets" />
+	<assets path="mods" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
@@ -41,6 +42,9 @@
 
 	<haxelib name="flixel-modding" />
 	<define name="flixelModding" if="flixel-modding"/>
+
+	<haxelib name="hscript-iris" />
+	<define name="hscriptPos" if="hscript-iris"/>
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 

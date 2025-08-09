@@ -1,6 +1,4 @@
-package;
-
-import flixel.FlxState;
+package play;
 
 class PlayState extends FlxState
 {
