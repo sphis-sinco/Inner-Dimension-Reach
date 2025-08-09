@@ -8,6 +8,7 @@ import haxe.exceptions.ArgumentException;
 typedef UI_Option =
 {
 	var name:String;
+	var ?script_event:ScriptEvent;
 	var ?ui_menu:String;
 	var ?disabled:Bool;
 }
@@ -36,6 +37,16 @@ class PlayState extends FlxState
 				name: 'Run',
 				disabled: true
 			}
+		],
+		'attacks' => [
+			{
+				name: 'Gay beam',
+				script_event: {name: 'playerAttack_gayBeam'}
+			},
+			{
+				name: 'Makankōsappō',
+				script_event: {name: 'playerAttack_makankosappo'}
+			},
 		]
 	];
 
