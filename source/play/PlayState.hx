@@ -2,6 +2,8 @@ package play;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import haxe.exceptions.ArgumentException;
 import play.controls.Controls;
@@ -100,7 +102,7 @@ class PlayState extends FlxState
 		addObject(opponent);
 		addObject(player);
 
-		ui_box = new FlxSprite().makeGraphic(320, FlxG.height);
+		ui_box = new FlxSprite(-320).makeGraphic(320, FlxG.height);
 		ui_box_text_contents = new FlxTypedGroup<FlxText>();
 
 		addObject(ui_box);
@@ -110,6 +112,8 @@ class PlayState extends FlxState
 
 		controls = new Controls('main');
 		FlxG.inputs.addInput(controls);
+
+		switch_turn();
 
 		super.create();
 	}
@@ -168,7 +172,8 @@ class PlayState extends FlxState
 		}
 		else if (controls.justReleased.ACCEPT)
 		{
-			final ui_menu = ui_options.get(ui_option_menu);
+			final og_ui_option_menu = ui_option_menu;
+			final ui_menu = ui_options.get(og_ui_option_menu);
 			final ui_opt = ui_menu[ui_option_selection];
 			final script_event = ui_opt.script_event;
 
@@ -177,7 +182,7 @@ class PlayState extends FlxState
 			if (script_event != null)
 				ScriptsManager.callScript(script_event.name ?? '', script_event.args ?? []);
 
-			if (ui_option_menu == 'attacks')
+			if (og_ui_option_menu == 'attacks' && ui_option_menu == 'main')
 			{
 				player_turn = false;
 				switch_turn();
@@ -197,7 +202,22 @@ class PlayState extends FlxState
 
 	function switch_turn()
 	{
-		trace(new haxe.exceptions.NotImplementedException());
+		if (player_turn)
+		{
+			FlxTween.tween(ui_box, {x: 0}, 1, {ease: FlxEase.sineOut});
+			for (text in ui_box_text_contents.members)
+			{
+				FlxTween.tween(text, {x: 0}, 1, {ease: FlxEase.sineOut});
+			}
+		}
+		if (!player_turn)
+		{
+			FlxTween.tween(ui_box, {x: -ui_box.width}, 1, {ease: FlxEase.sineIn});
+			for (text in ui_box_text_contents.members)
+			{
+				FlxTween.tween(text, {x: -ui_box.width}, 1, {ease: FlxEase.sineIn});
+			}
+		}
 	}
 
 	public function ui_box_text_contents_update()
