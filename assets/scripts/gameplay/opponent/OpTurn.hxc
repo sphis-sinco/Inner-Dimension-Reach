@@ -1,0 +1,5 @@
+function op_turn()
+{
+        PlayState.instance.player_turn = true;
+	PlayState.instance.switch_turn();
+}

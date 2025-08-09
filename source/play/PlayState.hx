@@ -227,8 +227,7 @@ class PlayState extends FlxState
 
 	public function op_turn()
 	{
-		player_turn = true;
-		switch_turn();
+		ScriptsManager.callScript('op_turn');
 	}
 
 	public function ui_box_text_contents_update()
