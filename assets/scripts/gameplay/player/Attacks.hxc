@@ -1,0 +1,8 @@
+function playerAttack_gayBeam()
+{
+        trace('THE OPPONENT IS NOW G A E');
+}
+function playerAttack_makankosappo()
+{
+        trace('GOKU IS D E A D');
+}
