@@ -1,2 +1,2 @@
 # Inner Dimension Reach
-Codename: `IDR_RPG` this project is all about replicating the fun of [OCRPG](https://comatoasterstrudel.itch.io/ocrpg) (Get it on [Steam](https://store.steampowered.com/app/2852200/OCRPG) when you can) by Happy Campers
+Codename: `IDR_RPG`, this project is all about replicating the fun of [OCRPG](https://comatoasterstrudel.itch.io/ocrpg) (Get it on [Steam](https://store.steampowered.com/app/2852200/OCRPG) when you can) by Happy Campers
