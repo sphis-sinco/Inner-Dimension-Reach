@@ -137,7 +137,7 @@ class PlayState extends FlxState
 		for (i in 0...ui_options.get(ui_menu).length)
 		{
 			var item = ui_options.get(ui_menu)[i];
-			var text = new FlxText(0, 64 + ((128 * (ui_options.get(ui_menu).length / 5)) * i), ui_box.width, item.name, 16);
+			var text = new FlxText(ui_box.x, 64 + ((128 * (ui_options.get(ui_menu).length / 5)) * i), ui_box.width, item.name, 16);
 			text.color = FlxColor.BLACK;
 			text.alignment = 'center';
 			text.ID = i;
@@ -153,7 +153,7 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
-		if (player_turn)
+		if (player_turn && ui_box.x == 0)
 		{
 			ui_box_text_contents_update();
 			ui_controls_check();
@@ -186,7 +186,6 @@ class PlayState extends FlxState
 			{
 				player_turn = false;
 				switch_turn();
-				op_turn();
 			}
 		}
 		else if (controls.justReleased.BACK)
@@ -212,12 +211,24 @@ class PlayState extends FlxState
 		}
 		if (!player_turn)
 		{
-			FlxTween.tween(ui_box, {x: -ui_box.width}, 1, {ease: FlxEase.sineIn});
+			FlxTween.tween(ui_box, {x: -ui_box.width}, 1, {
+				ease: FlxEase.sineIn,
+				onComplete: tween ->
+				{
+					op_turn();
+				}
+			});
 			for (text in ui_box_text_contents.members)
 			{
 				FlxTween.tween(text, {x: -ui_box.width}, 1, {ease: FlxEase.sineIn});
 			}
 		}
+	}
+
+	public function op_turn()
+	{
+		player_turn = true;
+		switch_turn();
 	}
 
 	public function ui_box_text_contents_update()
@@ -232,6 +243,4 @@ class PlayState extends FlxState
 			}
 		}
 	}
-
-	public function op_turn() {}
 }
