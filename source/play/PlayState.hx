@@ -50,8 +50,10 @@ class PlayState extends FlxState
 		]
 	];
 
+	public var ui_option_selection:Int = 0;
+
 	public var ui_box:FlxSprite;
-	public var ui_box_contents:FlxTypedGroup<FlxBasic>;
+	public var ui_box_text_contents:FlxTypedGroup<FlxText>;
 
 	public var opponent:FlxSprite;
 	public var player:FlxSprite;
@@ -85,22 +87,22 @@ class PlayState extends FlxState
 		addObject(player);
 
 		ui_box = new FlxSprite().makeGraphic(320, FlxG.height);
-		ui_box_contents = new FlxTypedGroup<FlxBasic>();
+		ui_box_text_contents = new FlxTypedGroup<FlxText>();
 
 		addObject(ui_box);
-		addObject(ui_box_contents);
+		addObject(ui_box_text_contents);
 
 		load_ui_menu('main');
 
 		super.create();
 	}
 
-	function load_ui_menu(ui_menu:String)
+	public function load_ui_menu(ui_menu:String)
 	{
-		for (item in ui_box_contents)
+		for (item in ui_box_text_contents)
 		{
 			item.destroy();
-			ui_box_contents.remove(item);
+			ui_box_text_contents.remove(item);
 		}
 
 		if (!ui_options.exists(ui_menu))
@@ -115,13 +117,26 @@ class PlayState extends FlxState
 			var text = new FlxText(0, 64 + ((128 * (ui_options.get(ui_menu).length / 5)) * i), ui_box.width, item.name, 16);
 			text.color = FlxColor.BLACK;
 			text.alignment = 'center';
+			text.ID = i;
 
-			ui_box_contents.add(text);
+			ui_box_text_contents.add(text);
 		}
 	}
 
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		ui_box_text_contents_update();
+	}
+
+	public function ui_box_text_contents_update()
+	{
+		for (item in ui_box_text_contents.members)
+		{
+			final selected = item.ID == ui_option_selection;
+
+			item.color = (selected) ? FlxColor.YELLOW : FlxColor.WHITE;
+		}
 	}
 }
