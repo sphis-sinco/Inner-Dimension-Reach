@@ -71,7 +71,7 @@ class PlayState extends FlxState
 		addObject(ui_box);
 		addObject(ui_box_contents);
 
-		load_ui_menu('main');
+		load_ui_menu('puzy');
 
 		super.create();
 	}
@@ -86,7 +86,7 @@ class PlayState extends FlxState
 
 		if (!ui_options.exists(ui_menu))
 		{
-			trace(new ArgumentException(ui_menu));
+			trace(new ArgumentException('', 'Non-existing ui_menu "$ui_menu"'));
 			return;
 		}
 
