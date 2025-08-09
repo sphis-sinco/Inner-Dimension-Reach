@@ -77,7 +77,7 @@ class PlayState extends FlxState
 
 	function load_ui_option(s:String)
 	{
-		throw new haxe.exceptions.NotImplementedException();
+		trace(new haxe.exceptions.NotImplementedException());
 	}
 
 	override public function update(elapsed:Float)
